@@ -1,13 +1,5 @@
-# <Title>
-
-<Description>
-
-[<link>](http://example.com)
-
-```bash
-<some command>
-```
+Nothing here yet.
 
 # License
 
-Released under the MIT License.
+MIT
