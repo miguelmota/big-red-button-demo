@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "big-red-button": "0.0.3",
-    "terminal-tab": "0.0.3"
+    "terminal-tab": "0.0.4"
   }
 }
