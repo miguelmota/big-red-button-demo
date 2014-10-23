@@ -52,7 +52,7 @@ for (var i = 0; i < BigRedButton.deviceCount(); i++) {
     exec(['afplay', randomMediaFile()].join(' '), function(error, stdout, stderr) {});
 
     getJoke().then(function(joke) {
-      terminalTab.open(['figlet', joke, '&& exit'].join(' '));
+      terminalTab.open(['figlet', joke, '; sleep 10', '&& exit'].join(' '));
     }).fail(function(err) {
       terminalTab.open(['sl', '&& exit'].join(' '));
     });
