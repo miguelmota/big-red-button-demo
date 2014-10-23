@@ -4,6 +4,8 @@ var os = require('os');
 var _ = require('lodash');
 var terminalTab = require('terminal-tab');
 var BigRedButton = require('big-red-button');
+var request = require('request');
+var Q = require('q');
 
 var mediaFiles = [];
 
@@ -21,6 +23,21 @@ function randomMediaFile() {
   return mediaFiles[_.random(0,mediaFiles.length)];
 }
 
+function getJoke() {
+  var deferred = Q.defer();
+
+  request('http://api.yomomma.info/', function(err, res, body) {
+      try {
+        var joke = JSON.parse(body.match(/({"j.*(.*).*})/gi)[0]).joke;
+        deferred.resolve(joke);
+      } catch(e) {
+        deferred.reject(e);
+      }
+  });
+
+  return deferred.promise;
+}
+
 var bigRedButtons = [];
 
 for (var i = 0; i < BigRedButton.deviceCount(); i++) {
@@ -33,7 +50,12 @@ for (var i = 0; i < BigRedButton.deviceCount(); i++) {
 
     exec(['afplay', randomMediaFile()].join(' '), function(error, stdout, stderr) {});
 
-    terminalTab.open(['sl', '&& exit'].join(' '));
+    getJoke().then(function(joke) {
+      terminalTab.open(['echo', joke, '&& exit'].join(' '));
+    }).fail(function(err) {
+      terminalTab.open(['sl', '&& exit'].join(' '));
+    });
+
   });
 
   bigRedButtons[i].on('buttonReleased', function () {
