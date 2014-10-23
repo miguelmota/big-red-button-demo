@@ -6,6 +6,7 @@ var terminalTab = require('terminal-tab');
 var BigRedButton = require('big-red-button');
 var request = require('request');
 var Q = require('q');
+var figlet = require('figlet');
 
 var mediaFiles = [];
 
@@ -51,7 +52,7 @@ for (var i = 0; i < BigRedButton.deviceCount(); i++) {
     exec(['afplay', randomMediaFile()].join(' '), function(error, stdout, stderr) {});
 
     getJoke().then(function(joke) {
-      terminalTab.open(['echo', joke, '&& exit'].join(' '));
+      terminalTab.open(['figlet', joke, '&& exit'].join(' '));
     }).fail(function(err) {
       terminalTab.open(['sl', '&& exit'].join(' '));
     });
